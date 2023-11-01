@@ -1,0 +1,37 @@
+import "queuedef.affe"
+
+type ('a: 'k) pool : 'k = Pool of ((unit -> 'a) * 'a queue)
+let create f = Pool (f, qcreate())
+
+let consume f c = match c with {
+  | Pool (_cre,q) -> qiter f q
+  }
+
+let push v c = match c with {
+  | Pool (_cre,q) -> qpush v &q
+}
+
+let use p f = 
+  match p with { Pool (cr, q) ->
+  let o = 
+  match qpop &q with {
+    | Some x -> x
+    | None () -> cr ()
+  } in
+  let r = f &!o in
+  let () = qpush o &q in
+  r
+  }
+
+extern printint i : \ 'k . &!('k, int) -> unit = <| print_int i; print_endline "" |>
+
+let exec = 
+    let p = create (fun () -> 0) in
+    use p printint;  # 0
+    push 1 p;
+    push 2 p;
+    use p printint;  # 0
+    use p printint;  # 1
+    use p printint;  # 2
+    use p printint;  # 0
+    use p printint   # 1

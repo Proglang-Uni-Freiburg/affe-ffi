@@ -1,0 +1,17 @@
+type ('a : 'k) opt : 'k = None of unit | Some of 'a
+
+extern type ('a : 'k) queue : 'k <| 'a Queue.t |>
+
+extern qcreate _ : \ ('a : _) . unit -> 'a queue 
+    = <| Queue.create () |>
+extern qpush v q : \ 'k2 ('a : 'k) . 'a -> &('k2, 'a queue) -{'k}> unit
+    = <| Queue.push v q |>
+
+# opt and option are not the same!
+extern qpop q : \ 'k2 ('a : _) . &('k2, 'a queue) -> 'a opt = <| 
+    match Queue.take_opt q with 
+    | None -> None () 
+    | Some x -> Some x
+|>
+extern qiter f q : \ ('a :_) . ('a -> unit) -> 'a queue -> unit
+    = <| Queue.iter f q |>

@@ -1,0 +1,25 @@
+{
+  "name": "affe",
+  "displayName": "affe",
+  "description": "affe language support",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "affe",
+      "aliases": ["Affe", "affe"],
+      "extensions": [".affe"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "affe",
+      "scopeName": "source.affe",
+      "path": "./syntaxes/affe.tmLanguage.json"
+    }]
+  }
+}

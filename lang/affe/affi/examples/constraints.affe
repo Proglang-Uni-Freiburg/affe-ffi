@@ -1,0 +1,9 @@
+type ('a : 'k) aff_opt : 'k = None | Some of 'a with 'k > aff
+
+type unint : un = I of int
+type affint : aff = I of int
+type linint : lin = I of int
+
+type linint_opt = O of linint aff_opt
+type affint_opt = O of affint aff_opt
+type unint_opt = O of unint aff_opt

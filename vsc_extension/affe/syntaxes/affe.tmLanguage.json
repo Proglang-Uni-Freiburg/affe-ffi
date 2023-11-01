@@ -1,0 +1,306 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Affe",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#ocaml"
+        },
+        {
+            "include": "#bindings"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#literals"
+        },
+        {
+            "include": "#types"
+        },
+        {
+            "include": "#identifiers"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.number-sign.affe",
+                    "begin": "\\#",
+                    "end": "$"
+                }
+            ]
+        },
+        "ocaml": {
+            "name": "meta.embedded.block.ocaml",
+            "begin": "(\\<\\|)",
+            "end": "(\\|\\>)",
+            "beginCaptures": {
+                "0": {
+                    "name": "keyword.control.affe"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "keyword.control.affe"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "source.ocaml"
+                }
+            ]
+        },
+        "bindings": {
+            "patterns": [
+                {
+                    "comment": "let expression",
+                    "match": "(let)[[:space:]]+([[:lower:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.affe"
+                        },
+                        "2": {
+                            "name": "entity.name.function.binding.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "type declaration",
+                    "match": "(extern[[:space:]]+|)(type)[[:space:]]+(\\([^\\)]*\\)[[:space:]]+|)([[:lower:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.affe"
+                        },
+                        "2": {
+                            "name": "keyword.affe"
+                        },
+                        "3": {
+                            "name": "keyword.affe"
+                        },
+                        "4": {
+                            "name": "entity.name.function.binding.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "val declaration",
+                    "match": "(val)[[:space:]]+([[:lower:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.affe"
+                        },
+                        "2": {
+                            "name": "entity.name.function.binding.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "extern declaration",
+                    "match": "(extern)[[:space:]]+([[:lower:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.affe"
+                        },
+                        "2": {
+                            "name": "entity.name.function.binding.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "extern module",
+                    "match": "(extern)[[:space:]]+([[:upper:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.affe"
+                        },
+                        "2": {
+                            "name": "entity.name.class.affe"
+                        }
+                    }
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "comment": "vertical bar",
+                    "name": "keyword.other.affe",
+                    "match": "\\|"
+                },
+                {
+                    "comment": "semicolon separator",
+                    "name": "keyword.other.affe",
+                    "match": ";"
+                },
+                {
+                    "comment": "comma separator",
+                    "name": "keyword.other.affe",
+                    "match": ","
+                },
+                {
+                    "comment": "period",
+                    "name": "keyword.other.affe",
+                    "match": "\\."
+                },
+                {
+                    "comment": "colon",
+                    "name": "keyword.other.affe",
+                    "match": ":"
+                },
+                {
+                    "comment": "borrow",
+                    "match": "[[:space:]](&|&&|&!|&&!)[^&![:space:]]",
+                    "captures": {
+                        "1": {
+                            "name": "markup.bold.affe"
+                        },
+                        "2": {
+                            "name": "entity.name.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "arrow",
+                    "match": "(\\-\\{)([^\\}\\s]*)(\\}>)",
+                    "captures": {
+                        "1": {
+                            "name": "markup.bold.affe"
+                        },
+                        "2": {
+                            "name": "keyword.other.affe"
+                        },
+                        "3": {
+                            "name": "markup.bold.affe"
+                        }
+                    }
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.affe",
+                    "match": "\\b(match|with|rec|in|fun|of|let)\\b"
+                },
+                {
+                    "name": "keyword.control.affe",
+                    "match": "\\b(import|extern)\\b"
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.affe",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.affe",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "literals": {
+            "patterns": [
+                {
+                    "name": "keyword.affe",
+                    "match": "\\b(True|False)\\b"
+                },
+                {
+                    "name": "constant.numeric.affe",
+                    "match": "\\b([[:digit:]][[:digit:]_]*)\\b"
+                },
+                {
+                    "name": "constant.language.unit.affe",
+                    "match": "\\(\\)"
+                },
+                {
+                    "comment": "parantheses",
+                    "begin": "\\(",
+                    "end": "\\)",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "comment": "array",
+                    "begin": "\\[\\|",
+                    "end": "\\|\\]",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "comment": "braces",
+                    "begin": "\\{",
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "patterns": [
+                {
+                    "comment": "type parameter",
+                    "name": "storage.type.affe",
+                    "match": "'[[:alpha:]][[:word:]']*\\b|'_\\b"
+                },
+                {
+                    "comment": "weak type parameter",
+                    "name": "storage.type.weak.affe",
+                    "match": "'_[[:alpha:]][[:word:]']*\\b"
+                },
+                {
+                    "comment": "builtin type",
+                    "name": "support.type.affe",
+                    "match": "\\b(unit|bool|int)\\b"
+                },
+                {
+                    "comment": "builtin kinds",
+                    "name": "support.type.affe",
+                    "match": "\\b(lin|aff|un)\\b"
+                }
+            ]
+        },
+        "identifiers": {
+            "patterns": [
+                {
+                    "comment": "wildcard underscore",
+                    "name": "constant.language.affe",
+                    "match": "\\b_\\b"
+                },
+                {
+                    "comment": "capital identifier for constructor, exception, or module",
+                    "name": "constant.language.capital-identifier.affe",
+                    "match": "\\b[[:upper:]][[:word:]']*('|\\b)"
+                },
+                {
+                    "comment": "lowercase identifier",
+                    "name": "source.affe",
+                    "match": "\\b[[:lower:]_][[:word:]']*('|\\b)"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.affe",
+    "embeddedLanguages": {
+        "meta.embedded.block.ocaml": "ocaml"
+    }
+}

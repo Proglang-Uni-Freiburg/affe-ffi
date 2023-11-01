@@ -1,0 +1,8 @@
+let id = fun x -> x
+let id2 = id id
+let x =
+  let x = id2 3 in
+  id2
+let a = 2
+let plusa = fun b -> a + b
+let c = plusa 2
