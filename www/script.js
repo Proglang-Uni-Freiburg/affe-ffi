@@ -36,6 +36,13 @@ $(function() {
         scrollbarStyle : "simple"
     });
 
+    term2 = CodeMirror(document.getElementById("term2"), {
+        lineWrapping   : true,
+        readOnly       : false,
+        theme          : "solarized",
+        scrollbarStyle : "simple"
+    });
+
     // Loading default file in the editor.
     var s = location.hash.substring(1) ;
     if (s === "") { s = "intro.affe"; };
@@ -48,14 +55,27 @@ $(function() {
         maxWidth : (document.body.clientWidth - 400)
     });
 
+    $( "#term" ).resizable({
+        handles  : "e",
+        minWidth : 100,
+        maxWidth : ($( "#terms" ).width() - 100),
+        resize   :
+        function( event, ui ) {
+            $( "#term2" ).css("width", "calc(100% - "+ui.size.width+"px)");
+            term.refresh();
+            term2.refresh();
+        }
+    });
+
     $( "#edit" ).resizable({
         handles    : "s",
         minHeight  : 100,
         maxHeight  : (document.body.clientHeight - 120),
         resize     :
         function( event, ui ) {
-            $( "#term" ).css("height", "calc(100% - "+ui.size.height+"px - 3ex)");
+            $( "#terms" ).css("height", "calc(100% - "+ui.size.height+"px - 3ex)");
             term.refresh();
+            term2.refresh();
             edit.refresh();
         }
     });

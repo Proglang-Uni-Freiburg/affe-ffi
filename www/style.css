@@ -59,7 +59,7 @@ a.file:hover {
 }
 
 #west {
-  width            : 800px;
+  width            : 70%;
   height           : 100%;
   float            : left;
   overflow         : hidden;
@@ -100,9 +100,20 @@ a.file:hover {
   color            : #49626a;
 }
 
-#term {
+#terms {
   width            : 100%;
   height           : calc(30% - 3ex);
+}
+
+#term {
+  float            : left;
+  width            : 50%;
+  height           : 100%;
+}
+
+#term2 {
+  overflow         : auto;
+  height           : 100%;
 }
 
 #east {

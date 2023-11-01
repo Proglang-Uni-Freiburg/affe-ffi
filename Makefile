@@ -33,3 +33,8 @@ clean:
 web:
 	dune build lang/affe/affe_www.bc.js
 	@cp _build/default/lang/affe/affe_www.bc.js www
+
+github_pages: web
+	@cd ../lukaskleinert.github.io/ ; git pull --rebase
+	@cp -r www/* ../lukaskleinert.github.io/
+	@cd ../lukaskleinert.github.io/ ; git add . ; git commit -m "auto upload" ; git push

@@ -14,7 +14,8 @@ function RegExpPrepare (s) {
 
 var keywords = [
     "type", "fun", "val", "match", "of", "include", "fix",
-    "rec", "let", "in", "for","all", "un", "aff", "lin"
+    "rec", "let", "in", "for","all", "un", "aff", "lin",
+    "extern"
 ];
 
 var op = [
@@ -22,7 +23,8 @@ var op = [
     "*", "/", "+", "-", "%", ">", "<", "->", "<-", "\\"
 ];
 var op2 = [
-    "-{", "}>", "&&!", "&&", "&!", "&"
+    "-{", "}>", "&&!", "&&", "&!", "&",
+    "<|", "|>"
 ];
 
 function mkre (l) {

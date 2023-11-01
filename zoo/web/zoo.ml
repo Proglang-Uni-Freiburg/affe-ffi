@@ -113,24 +113,27 @@ struct
         syntax_error ~loc:(location_of_lex lex) "syntax error"
 
   (** Load directives from the given file. *)
-  let use_file ctx (filename, content) =
+  let use_file ctx (filename, content, ffi_out) =
     match L.file_parser with
     | Some f ->
       let cmds = read_file (wrap_syntax_errors f) (filename, content) in
-      List.fold_left
+      let ctx = List.fold_left
         (L.exec (fun _ _ -> fatal_error "Cannot load files in the web toplevel"))
-        ctx cmds
+        ctx cmds in (
+          L.ffi ffi_out cmds;
+          ctx
+        )
     | None ->
       fatal_error "Cannot load files, only interactive shell is available"
 
 
-  let eval (name, s) =
+  let eval (name, s, ffi_out) =
     let name = Js_of_ocaml.Js.to_string name in
     let s = Js_of_ocaml.Js.to_string s in
     begin try
         Zoo_web.clear_term ();
         Zoo_web.add_to_term "(* Starting typing *)\n";
-        let _ = use_file L.initial_environment (name, s) in
+        let _ = use_file L.initial_environment (name, s, ffi_out) in
         ()
       with
       | Error err -> print_error err
@@ -154,7 +157,7 @@ struct
   let main () =
     Zoo_web.set_lang_name L.name;
     Js_of_ocaml.Js.export "Affe" (object%js
-      method eval name s = eval (name, s)
+      method eval name s = eval (name, s, Zoo_web.term)
     end)
     
 end
