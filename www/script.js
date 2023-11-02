@@ -55,17 +55,6 @@ $(function() {
         maxWidth : (document.body.clientWidth - 400)
     });
 
-    $( "#term" ).resizable({
-        handles  : "e",
-        minWidth : 100,
-        maxWidth : ($( "#terms" ).width() - 100),
-        resize   :
-        function( event, ui ) {
-            $( "#term2" ).css("width", "calc(100% - "+ui.size.width+"px)");
-            term.refresh();
-            term2.refresh();
-        }
-    });
 
     $( "#edit" ).resizable({
         handles    : "s",
@@ -101,6 +90,25 @@ function add_to_term(s) {
 function flush_term() {
     var doc = term.getDoc();
     term.scrollIntoView(doc.getCursor());
+}
+
+function clear_term2() {
+    term2.setValue('')
+}
+
+function add_to_term2(s) {
+    var doc = term2.getDoc();
+    var line = doc.lastLine();
+    var pos = {
+        line: line,
+        ch: doc.getLine(line).length
+        // set the character position to the end of the line
+    }
+    doc.replaceRange(s, pos); // adds a new line
+}
+function flush_term2() {
+    var doc = term2.getDoc();
+    term2.scrollIntoView(doc.getCursor());
 }
 
 // worker.onmessage =

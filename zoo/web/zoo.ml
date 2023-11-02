@@ -132,7 +132,9 @@ struct
     let s = Js_of_ocaml.Js.to_string s in
     begin try
         Zoo_web.clear_term ();
+        Zoo_web.clear_term2 ();
         Zoo_web.add_to_term "(* Starting typing *)\n";
+        Zoo_web.add_to_term2 "(* OCaml Code *)\n";
         let _ = use_file L.initial_environment (name, s, ffi_out) in
         ()
       with
@@ -157,7 +159,7 @@ struct
   let main () =
     Zoo_web.set_lang_name L.name;
     Js_of_ocaml.Js.export "Affe" (object%js
-      method eval name s = eval (name, s, Zoo_web.term)
+      method eval name s = eval (name, s, Zoo_web.term2)
     end)
     
 end

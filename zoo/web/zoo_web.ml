@@ -32,3 +32,28 @@ let term =
   Format.pp_set_margin t 60 ;
   Format.pp_set_max_indent t 30 ;
   t
+
+
+let clear_term2 () : unit = 
+  Js.Unsafe.fun_call (Js.Unsafe.js_expr "clear_term2")
+    [||]
+
+let add_to_term2 s : unit =
+  Js.Unsafe.fun_call (Js.Unsafe.js_expr "add_to_term2")
+    [|Js.Unsafe.inject @@ Js.string s|]
+let flush_term2 () : unit =
+  Js.Unsafe.fun_call (Js.Unsafe.js_expr "flush_term2")
+    [||]
+
+let term2 =
+  let t = Format.make_formatter
+    (fun s pos len ->
+        let s = String.sub s pos len in
+        add_to_term2 s)
+    flush_term2
+  in
+  Format.pp_set_max_boxes t 42 ;
+  Format.pp_set_ellipsis_text t "..." ;
+  Format.pp_set_margin t 60 ;
+  Format.pp_set_max_indent t 30 ;
+  t
