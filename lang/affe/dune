@@ -9,7 +9,7 @@
   (libraries ocamlgraph iter zoo)
   (modules :standard \ Affe Affe_www Eval)
   (preprocess (pps ppx_deriving.std))
-  (wrapped false)
+  (wrapped true)
 )
 
 (executable
@@ -23,7 +23,9 @@
   (libraries affe zoo_web)
   (preprocess (pps tyxml-ppx))
   (modes js)
-  (js_of_ocaml)
+  (js_of_ocaml
+    (flags --toplevel --dynlink +dynlink.js +toplevel.js)
+  )
 )
 
 (include_subdirs unqualified)

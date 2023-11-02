@@ -31,7 +31,7 @@ clean:
 	rm -f www/affe_www.bc.js
 
 web:
-	dune build lang/affe/affe_www.bc.js
+	dune build lang/affe/affe_www.bc.js --profile release
 	@cp _build/default/lang/affe/affe_www.bc.js www
 
 github_pages: web

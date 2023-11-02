@@ -2,6 +2,6 @@
  (name zoo_web)
  (implements zoo)
  (private_modules zoo_web)
- (libraries js_of_ocaml js_of_ocaml-tyxml)
+ (libraries js_of_ocaml js_of_ocaml-tyxml js_of_ocaml-toplevel)
  (preprocess (pps js_of_ocaml-ppx))
 )
