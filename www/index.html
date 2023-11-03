@@ -24,14 +24,17 @@
       <p id="pos"></p>
       <a title="run the program" href="#"
         onclick="eval(); return false;">Run</a>
-      <a title="clear log" href="#"
-        onclick="clear_term(); return false;">Clear log</a>
+      <a title="clear logs" href="#"
+        onclick="clear_term(1);clear_term(2);clear_term(3); return false;">Clear logs</a>
       <a title="clear editor" href="#"
         onclick="edit.setValue(''); return false;">Clear editor</a>
+      <a title="run ocaml" href="#"
+        onclick="run_ocaml(); return false;">Run OCaml (WHY DOESN'T THIS WORK???)</a>
     </div>
     <div id="terms">
         <div id="term"></div>
         <div id="term2"></div>
+        <div id="term3"></div>
     </div>
   </div>
   <div id="east">

@@ -43,6 +43,13 @@ $(function() {
         scrollbarStyle : "simple"
     });
 
+    term3 = CodeMirror(document.getElementById("term3"), {
+        lineWrapping   : true,
+        readOnly       : false,
+        theme          : "solarized",
+        scrollbarStyle : "simple"
+    });
+
     // Loading default file in the editor.
     var s = location.hash.substring(1) ;
     if (s === "") { s = "intro.affe"; };
@@ -63,8 +70,6 @@ $(function() {
         resize     :
         function( event, ui ) {
             $( "#terms" ).css("height", "calc(100% - "+ui.size.height+"px - 3ex)");
-            term.refresh();
-            term2.refresh();
             edit.refresh();
         }
     });
@@ -73,12 +78,18 @@ $(function() {
 
 // var worker_handler = new Object ();
 
-function clear_term() {
-    term.setValue('')
+function get_term(i) {
+    if (i == 1) return term;
+    else if (i == 2) return term2;
+    else if (i == 3) return term3;
 }
 
-function add_to_term(s) {
-    var doc = term.getDoc();
+function clear_term(i) {
+    get_term(i).setValue('')
+}
+
+function add_to_term(i, s) {
+    var doc = get_term(i).getDoc();
     var line = doc.lastLine();
     var pos = {
         line: line,
@@ -87,28 +98,10 @@ function add_to_term(s) {
     }
     doc.replaceRange(s, pos); // adds a new line
 }
-function flush_term() {
-    var doc = term.getDoc();
-    term.scrollIntoView(doc.getCursor());
-}
-
-function clear_term2() {
-    term2.setValue('')
-}
-
-function add_to_term2(s) {
-    var doc = term2.getDoc();
-    var line = doc.lastLine();
-    var pos = {
-        line: line,
-        ch: doc.getLine(line).length
-        // set the character position to the end of the line
-    }
-    doc.replaceRange(s, pos); // adds a new line
-}
-function flush_term2() {
-    var doc = term2.getDoc();
-    term2.scrollIntoView(doc.getCursor());
+function flush_term(i) {
+    var t = get_term(i)
+    var doc = t.getDoc();
+    t.scrollIntoView(doc.getCursor());
 }
 
 // worker.onmessage =
@@ -121,6 +114,11 @@ function flush_term2() {
 //   worker_handler[action_name] = cont;
 //   worker.postMessage ({fname: action_name, args: action_args});
 // }
+
+function run_ocaml() {
+    var s = term2.getValue();
+    Affe.runocaml (s);
+}
 
 function eval() {
     var s = edit.getValue();

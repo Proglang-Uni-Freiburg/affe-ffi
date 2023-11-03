@@ -103,17 +103,11 @@ a.file:hover {
 #terms {
   width            : 100%;
   height           : calc(30% - 3ex);
+  display          : flex;
 }
 
-#term {
-  float            : left;
-  width            : 50%;
-  height           : 100%;
-}
-
-#term2 {
-  overflow         : auto;
-  height           : 100%;
+#terms > div {
+    flex           : 1;
 }
 
 #east {

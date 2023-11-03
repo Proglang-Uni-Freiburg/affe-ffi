@@ -61,7 +61,7 @@ let syntax_error ?loc msg = error ~kind:"Syntax error" ?loc msg
 
 (** Print a message at a given location [loc] of message type [msg_type]. *)
 let print_message ?(loc=Nowhere) msg_type fmt =
-  let ppf = Zoo_web.term in
+  let ppf = Zoo_web.term 1 in
   match loc with
   | Location _ ->
      Format.fprintf ppf ("%s at %t:@."^^fmt^^"@.") msg_type (print_location loc)
@@ -72,7 +72,7 @@ let print_message ?(loc=Nowhere) msg_type fmt =
 let print_error (loc, err_type, msg) = print_message ~loc err_type "%s" msg
 
 let print_info msg =
-  Format.fprintf Zoo_web.term msg
+  Format.fprintf (Zoo_web.term 1) msg
 
 type filename = string
 
@@ -131,10 +131,10 @@ struct
     let name = Js_of_ocaml.Js.to_string name in
     let s = Js_of_ocaml.Js.to_string s in
     begin try
-        Zoo_web.clear_term ();
-        Zoo_web.clear_term2 ();
-        Zoo_web.add_to_term "(* Starting typing *)\n";
-        Zoo_web.add_to_term2 "(* OCaml Code *)\n";
+        Zoo_web.clear_term 1 ();
+        Zoo_web.clear_term 2 ();
+        Zoo_web.add_to_term 1 "(* Starting typing *)\n";
+        Zoo_web.add_to_term 2 "(* OCaml Code *)\n";
         let _ = use_file L.initial_environment (name, s, ffi_out) in
         ()
       with
@@ -142,7 +142,7 @@ struct
       | _e ->
         error "Uncaught exception"
     end ;
-    Zoo_web.add_to_term "(* Finished typing *)\n";
+    Zoo_web.add_to_term 1 "(* Finished typing *)\n";
     ()
 
   let load_files l =
@@ -158,8 +158,10 @@ struct
   
   let main () =
     Zoo_web.set_lang_name L.name;
+    Js_of_ocaml_toplevel.JsooTop.initialize();
     Js_of_ocaml.Js.export "Affe" (object%js
-      method eval name s = eval (name, s, Zoo_web.term2)
+      method eval name s = eval (name, s, Zoo_web.term 2)
+      method runocaml s = Zoo_web.run_ocaml s
     end)
     
 end
