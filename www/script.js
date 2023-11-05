@@ -73,6 +73,8 @@ $(function() {
             edit.refresh();
         }
     });
+
+    console.log("Initialized jquery");
 });
 
 
@@ -89,6 +91,7 @@ function clear_term(i) {
 }
 
 function add_to_term(i, s) {
+    console.log("ADDED", i, s);
     var doc = get_term(i).getDoc();
     var line = doc.lastLine();
     var pos = {
@@ -117,10 +120,11 @@ function flush_term(i) {
 
 function run_ocaml() {
     var s = term2.getValue();
-    Affe.runocaml (s);
+    add_to_term(3, (OCaml.runocaml (s)));
 }
 
 function eval() {
+    console.log("New Eval!");
     var s = edit.getValue();
     Affe.eval (filename, s);
 }

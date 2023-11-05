@@ -35,12 +35,10 @@ let term i =
   t
 
 
-let run_ocaml s : unit =
-  let executes code : string = (
-    let code = Js.to_string code in
-    let buffer = Buffer.create 16 in
+let run_ocaml s =
+    let code = Js.to_string s in
+    let buffer = Buffer.create 100 in
     let formatter = Format.formatter_of_buffer buffer in
-    Js_of_ocaml_toplevel.JsooTop.execute false formatter code;
-    Buffer.contents buffer) in
-  clear_term 3 ();
-  add_to_term 3 (executes s)
+    let b = Js_of_ocaml_toplevel.JsooTop.use formatter code in
+    let _ = Buffer.add_string buffer (string_of_bool b) in
+    Js.string (Buffer.contents buffer)

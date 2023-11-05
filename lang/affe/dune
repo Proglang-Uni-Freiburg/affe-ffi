@@ -24,7 +24,7 @@
   (preprocess (pps tyxml-ppx))
   (modes js)
   (js_of_ocaml
-    (flags --toplevel --dynlink +dynlink.js +toplevel.js)
+    (flags --toplevel)
   )
 )
 
