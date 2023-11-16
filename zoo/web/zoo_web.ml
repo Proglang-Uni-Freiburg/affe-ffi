@@ -33,12 +33,3 @@ let term i =
   Format.pp_set_margin t 60 ;
   Format.pp_set_max_indent t 30 ;
   t
-
-
-let run_ocaml s =
-    let code = Js.to_string s in
-    let buffer = Buffer.create 100 in
-    let formatter = Format.formatter_of_buffer buffer in
-    let b = Js_of_ocaml_toplevel.JsooTop.use formatter code in
-    let _ = Buffer.add_string buffer (string_of_bool b) in
-    Js.string (Buffer.contents buffer)

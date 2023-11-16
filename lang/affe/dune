@@ -23,9 +23,7 @@
   (libraries affe zoo_web)
   (preprocess (pps tyxml-ppx))
   (modes js)
-  (js_of_ocaml
-    (flags --toplevel)
-  )
+  (js_of_ocaml)
 )
 
 (include_subdirs unqualified)

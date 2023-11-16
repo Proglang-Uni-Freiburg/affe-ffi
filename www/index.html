@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
   <script src="affe_www.bc.js" defer></script>
+  <script src="evaluator.bc.js" defer></script>
 </head>
 <body>
   <div id="west">
@@ -23,7 +24,7 @@
     <div id="panel">
       <p id="pos"></p>
       <a title="run the program" href="#"
-        onclick="eval(); return false;">Run</a>
+        onclick="eval_affe(); return false;">Run</a>
       <a title="clear logs" href="#"
         onclick="clear_term(1);clear_term(2);clear_term(3); return false;">Clear logs</a>
       <a title="clear editor" href="#"

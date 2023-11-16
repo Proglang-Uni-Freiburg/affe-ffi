@@ -158,12 +158,8 @@ struct
   
   let main () =
     Zoo_web.set_lang_name L.name;
-    (* Js_of_ocaml_toplevel.JsooTop.initialize(); *)
     Js_of_ocaml.Js.export "Affe" (object%js
       method eval name s = eval (name, s, Zoo_web.term 2)
-    end);
-    Js_of_ocaml.Js.export "OCaml" (object%js
-      method runocaml s = Zoo_web.run_ocaml s
     end)
     
 end
