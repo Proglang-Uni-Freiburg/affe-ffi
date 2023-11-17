@@ -9,7 +9,7 @@
   (libraries ocamlgraph iter zoo)
   (modules :standard \ Affe Affe_www Eval)
   (preprocess (pps ppx_deriving.std))
-  (wrapped true)
+  (wrapped false)
 )
 
 (executable

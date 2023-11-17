@@ -1,0 +1,36 @@
+extern type ('a : 'k) option : 'k = None | Some of 'a
+
+extern (
+    type string
+)
+
+# ocaml type alias (without type constructors/constraints)
+extern type ('a : 'k) optlist : 'k <| 'a option List.t |>
+
+# simple type aliases are not implemented in affe, so export to ocaml
+extern type optstrlist <| string optlist |>
+
+extern x : string = <| "hello world" |>
+
+extern printostr s : string option -> unit = 
+<| match s with 
+    | None -> print_endline "None"
+    | Some s -> print_endline s
+|>
+
+extern lst : optstrlist = <| [ None ; None ; Some "a"; Some x ] |>
+
+extern iter f l : \ 'k ('a : 'k) . ('a option -> unit) -> 'a optlist -> unit 
+    = <| List.iter f l |>
+
+# optstrlist and string optlist cannot be unified (no true type alias)
+# so the following is not allowed:
+# let exec = iter printostr lst
+
+# exec can only be defined externally
+extern exec : unit = <| iter printostr lst |>
+
+# or by evading alias
+extern lst2 : string optlist = <| lst |>
+
+let exec2 = iter printostr lst2

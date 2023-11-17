@@ -29,10 +29,13 @@ vsc_extension:
 clean:
 	dune clean
 	rm -f www/affe_www.bc.js
+	rm -f www/jsootop.bc.js
 
 web:
 	dune build lang/affe/affe_www.bc.js --profile=release
+	dune build zoo/web/jsootop/jsootop.bc.js --profile=release
 	@cp _build/default/lang/affe/affe_www.bc.js www
+	@cp _build/default/zoo/web/jsootop/jsootop.bc.js www
 
 github_pages: web
 	@cd ../lukaskleinert.github.io/ ; git pull --rebase

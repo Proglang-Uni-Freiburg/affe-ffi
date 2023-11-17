@@ -1,0 +1,17 @@
+extern type affstr : aff <| string |>
+
+extern type linstr : lin <| string |>
+
+extern createaff _ :  unit -> affstr = <| "affine!" |> 
+extern createlin _ :  unit -> linstr = <| "linear!" |> 
+
+extern printaff s : affstr -> unit = <| print_endline s |>
+extern printlin s : linstr -> unit = <| print_endline s |>
+
+
+let exec = 
+  let lins = createlin () in
+  let affs = createaff () in  # not used; ok
+  printlin lins;
+  # printlin lins; # no!
+  ()

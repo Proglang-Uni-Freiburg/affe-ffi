@@ -1,0 +1,14 @@
+# type ('a : 'k) array : aff constraints 'k < aff
+extern array_init n f : \ 'k ('a : _). int -> (int -{'k}> 'a) -{'k}> 'a array 
+    = <| Array.init n f |>
+extern array_free _arr : \ ('a : _). 'a array -> unit 
+    = <| () |>
+extern array_length arr : \ 'k ('a:_). &('k, 'a array) -> int 
+    = <| Array.length arr |>
+extern array_get (arr, idx) : \ 'k ('a:_). &('k, 'a array) * int -> 'a 
+    = <| Array.get arr idx |>
+extern array_set (arr, idx, v) : \ 'k ('a:_). &!('k, 'a array) * int * 'a -> unit
+    = <| Array.set arr idx v |>
+
+# these functions could also be defined externally
+# extern Arraydef ( ... )

@@ -59,14 +59,14 @@ $(function() {
     $( "#west" ).resizable({
         handles  : "e",
         minWidth : 400,
-        maxWidth : (document.body.clientWidth - 400)
+        maxWidth : (window.innerWidth - 400)
     });
 
 
     $( "#edit" ).resizable({
         handles    : "s",
         minHeight  : 100,
-        maxHeight  : (document.body.clientHeight - 120),
+        maxHeight  : (window.innerHeight - 120),
         resize     :
         function( event, ui ) {
             $( "#terms" ).css("height", "calc(100% - "+ui.size.height+"px - 3ex)");
@@ -118,14 +118,14 @@ function flush_term(i) {
 // }
 
 function run_ocaml() {
+    clear_term(3);
     var s = term2.getValue();
-    var res = evaluator.execute(s);
-    console.log(res);
+    var res = OCaml.execute(s);
     add_to_term(3, res);
+    flush_term(3);
 }
 
 function eval_affe() {
-    console.log("New Eval!");
     var s = edit.getValue();
     Affe.eval(filename, s);
 }

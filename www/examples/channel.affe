@@ -1,10 +1,10 @@
-## Channels
+# Channels
 #
-# We use channels as a basic example of the various concepts availble in Affe
+# We use channels as a basic example of the various concepts available in Affe
 
-## Prelude
+# Prelude
 # Let's assume the existence of strings
-type string
+type string : un
 
 # Channels are affine.
 # This means that a channel can be used at most once.
@@ -29,7 +29,7 @@ val close : channel -> unit
 val send : int -> channel -> channel
 val receive : channel -> int * channel
 
-## Basic programs on channels
+# Basic programs on channels
 
 # Open a channel, wait for a message, send it back
 let echo_once s =
@@ -52,7 +52,7 @@ let with_channel s f =
 # It's time to study arrows more closely.
 
 
-## Interlude on arrows
+# Interlude on arrows
 # 
 # Let us consider a function that applies a closure on a range of integer
 
@@ -67,8 +67,8 @@ let iter_integers =
   in
   aux
 
-# This function takes a closure of type `int -{^a}> unit`
-# Where `^a` is a *kind* variable that must respect the constraints `^a < unₙ`
+# This function takes a closure of type `int -{^k}> unit`
+# Where `^a` is a *kind* variable that must respect the constraints `^k < unₙ`
 #
 # Indeed, the closure is called multiple time. if it captured anything linear,
 # it could use it multiple time!

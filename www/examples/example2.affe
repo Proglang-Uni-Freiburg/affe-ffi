@@ -1,0 +1,35 @@
+import "basics.affe"
+
+extern (
+    type string
+    val print_endline : string -> unit
+)
+
+extern SDefinition (
+    val s : string
+)
+
+type cases = FST of int | SND of string
+
+let func a b = a + b
+
+
+let foo unused = (
+    let unused = (unused + 1) in (
+        let unused = 3 in unused
+    )
+)
+
+extern e : string = <| " " |>
+
+extern cat s1 s2 : string -> string -> string = <| s1 ^ s2 ^ e |>
+
+let x = cat (cat s e) s
+
+let u = 3
+
+extern main : unit = <| 
+    let () = print_endline "wow!";
+             print_endline "this works!"
+             in ()
+|>

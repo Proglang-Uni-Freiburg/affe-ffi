@@ -14,9 +14,9 @@
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script src="affe_www.bc.js" defer></script>
-  <script src="evaluator.bc.js" defer></script>
+  <script src="jsootop.bc.js" defer></script>
 </head>
 <body>
   <div id="west">
@@ -30,7 +30,7 @@
       <a title="clear editor" href="#"
         onclick="edit.setValue(''); return false;">Clear editor</a>
       <a title="run ocaml" href="#"
-        onclick="run_ocaml(); return false;">Run OCaml (WHY DOESN'T THIS WORK???)</a>
+        onclick="run_ocaml(); return false;">Run OCaml</a>
     </div>
     <div id="terms">
         <div id="term"></div>

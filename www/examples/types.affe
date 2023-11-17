@@ -1,0 +1,34 @@
+# usual types
+type foo = Foo | Bar of int
+
+extern type ('a : 'k) option : 'k = None | Some of 'a
+# simple "import" of extern type, no code generated
+# same as:
+extern (
+    type ('a : 'k) option : 'k = None | Some of 'a
+    # possibly other declarations
+)
+
+# x : int option
+let x = match None with {
+    | None -> None
+    | Some i -> Some (i + 1)
+}
+
+extern type ('a : 'k) option2 : 'k <| 'a option |>
+# translates to `type ('a) option2 = 'a option`
+
+# x2 : int option
+let x2 = match None with {
+    | None -> None
+    | Some i -> Some (i + 1)
+}
+
+extern type ('a : 'k) option3 : 'k = None | Some of 'a <| 'a option |>
+# translates to `type ('a) option3 = 'a option
+
+# x3 : int option3
+let x3 = match None with {
+    | None -> None
+    | Some i -> Some (i + 1)
+}

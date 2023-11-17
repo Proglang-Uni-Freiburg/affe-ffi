@@ -1,0 +1,9 @@
+(executable
+  (name jsootop)
+  (libraries js_of_ocaml js_of_ocaml-compiler js_of_ocaml-toplevel compiler-libs)
+  (preprocess (pps js_of_ocaml-ppx))
+  (modes js)
+  (js_of_ocaml
+    (flags --toplevel)
+  )
+)
