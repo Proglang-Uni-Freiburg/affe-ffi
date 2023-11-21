@@ -107,7 +107,11 @@ include Zoo.Main (struct
         List.fold_left f env constrs
       | Import s ->
         import env s
-      | Extern (_, cmds) -> List.fold_left (exec import) env cmds
+      | Extern (name, cmds) -> (match name with 
+          | {name=Some mod_name;_} -> List.fold_left (exec import) env 
+            (Renaming.mod_prefix_cmds mod_name [] cmds)
+          | _ -> List.fold_left (exec import) env cmds
+      )
       | OCAML (d, _, _) -> exec import env d
 
     let ffi = Affi.to_ocaml

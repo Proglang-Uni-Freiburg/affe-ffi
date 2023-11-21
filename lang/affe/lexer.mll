@@ -58,6 +58,10 @@ rule token = parse
   | ('#' [^'\n']*)? eof { EOF }
   | "'" ( '_'? [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]+ as s)  { TYIDENT s }
   | ( '_'? [ 'a'-'z' ] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]*) as s  { IDENT s }
+  | ( '_'? ['A'-'Z'] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]* '.'
+      [ 'a'-'z' ] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]*) as s { MIDENT s }
+  | ( '_'? ['A'-'Z'] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]* '.'
+      [ 'A'-'Z' ] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]*) as s { MUIDENT s }
   | ( '_'? [ 'A'-'Z' ] [ 'A'-'Z' 'a'-'z' '0'-'9' '_' '\'' ]*) as s  { UIDENT s }
   | "<|" { read_ocaml_inline (Buffer.create 16 ) lexbuf }
 

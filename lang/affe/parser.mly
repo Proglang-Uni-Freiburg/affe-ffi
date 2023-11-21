@@ -21,6 +21,8 @@ let mk_set a i x : expr = App (mk_var "array_set", [Tuple [a;i;x]])
 %token <string> IDENT
 %token <string> TYIDENT
 %token <string> UIDENT
+%token <string> MIDENT
+%token <string> MUIDENT
 %token <int> INT
 %token <string> STRING
 %token UN AFF LIN
@@ -59,7 +61,7 @@ let mk_set a i x : expr = App (mk_var "array_set", [Tuple [a;i;x]])
 /* %nonassoc below_DOT */
 /* %nonassoc DOT */
 %nonassoc
-  /* AND ANDBANG INT */ IDENT /* UIDENT LPAREN LACCO LBRACKPIPE YTOK ALLOC */
+  /* AND ANDBANG INT */ IDENT  MIDENT /* UIDENT LPAREN LACCO LBRACKPIPE YTOK ALLOC */
 
 %start file
 %type <Syntax.command list> file
@@ -82,11 +84,16 @@ command:
   | EXTERN typedecl=type_decl code=OCAML
     { OCAML (typedecl, [], code) }
   | EXTERN typedecl=type_decl
-    { Extern ({ mod_name = None ; name = None ; id = -1 }, [typedecl]) }
-  | EXTERN LPAREN l=list(command) RPAREN { Extern ({ mod_name = None ; name = None ; id = -1 }, l) }
-  | EXTERN n=uname LPAREN l=list(command) RPAREN { Extern (n, l) }
+    { Extern ({ name = None ; id = -1 }, [typedecl]) }
+  | EXTERN LPAREN l=list(command) RPAREN { Extern ({ name = None ; id = -1 }, l) }
+  | EXTERN n=UIDENT LPAREN l=list(module_val) RPAREN { Extern (Name.dummy n, l) }
   | EXTERN name=name args=list(simple_pattern) DOUBLECOLON typ=type_scheme EQUAL code=OCAML
     { OCAML ((ValueDef { name ; typ }),  args,  code) }
+
+module_val:
+  | VAL name=name DOUBLECOLON typ=type_scheme
+    { ValueDef { name ; typ } }
+  | typdecl=type_decl { typdecl }
 
 
 expr:
@@ -111,7 +118,7 @@ expr:
 
 simple_expr:
   | c=constant { Constant c }
-  | name=uname { Constructor (name) }
+  | name=uname { Constructor name }
   | name=name { Var name }
   | LPAREN RPAREN { Builtin.unit }
   | LPAREN l=separated_nonempty_list(COMMA,expr) RPAREN
@@ -167,10 +174,13 @@ constant:
   | PERCENT s=IDENT { Primitive s }
   | YTOK { Y }
 
+
 name:
   | name=IDENT { Name.dummy name }
+  | mod_name=MIDENT { Name.dummy mod_name }
 uname:
   | name=UIDENT { Name.dummy name }
+  | mod_name=MUIDENT { Name.dummy mod_name }
 type_var:
   | name=TYIDENT { Name.dummy name }
 kind_var:

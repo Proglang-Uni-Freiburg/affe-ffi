@@ -25,9 +25,9 @@ let rec digits fmt i =
     Format.pp_print_string fmt indice_array.(i mod 10)
   end
 
-let name_with_digits fmt { mod_name=_ ; Name. name ; id } =
+let name_with_digits fmt { Name. name ; id } =
   Format.fprintf fmt "%s%a" (CCOption.get_or ~default:"" name)  digits id
-let name_no_digits fmt { mod_name=_ ; Name. name ; _ } =
+let name_no_digits fmt { Name. name ; _ } =
   Format.fprintf fmt "%s" (CCOption.get_or ~default:"" name)
 
 let name = if !debug then name_with_digits else name_no_digits

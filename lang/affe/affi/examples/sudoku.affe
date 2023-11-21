@@ -28,12 +28,12 @@ let full_cell =
   let rec f i xset =
     match i < 0 with {
      | True -> xset
-     | False -> f (i - 1) (add xset i)
+     | False -> f (i - 1) (Intset.add xset i)
     }
   in
-  f (size - 1) empty
+  f (size - 1) Intset.empty
 
-let singleton n = add empty n
+let singleton n = Intset.add Intset.empty n
 
 let get x (i, j) = get (x, i*size+j)
 let set_mut x (i, j) v = set_mut (x, i*size+j, v)
@@ -51,13 +51,13 @@ let for_f =
 
 let remove_line i0 j0 g n =
   for_f (j0+1) (size - 1) (fun j -> 
-    let cell = rm (get &&g (i0 , j)) n in
+    let cell = Intset.rm (get &&g (i0 , j)) n in
     set_mut &&!g (i0, j) cell
   )
 
 let remove_column i0 j0 g n =
   for_f (i0+1) (size - 1) (fun i ->
-    let cell = rm (get &&g (i , j0)) n in
+    let cell = Intset.rm (get &&g (i , j0)) n in
     set_mut &&!g (i , j0) cell
   )
 
@@ -68,7 +68,7 @@ let remove_square i0 j0 g n =
     for_f (3*pos_j) (3*(pos_j+1) - 1) (fun j ->
       match and_f (i = i0) (j = j0) with {
         | False ->
-           let cell = rm (get &&g (i , j)) n in
+           let cell = Intset.rm (get &&g (i , j)) n in
            set_mut &&!g (i , j) cell
          | True ->
            ()
@@ -77,10 +77,10 @@ let remove_square i0 j0 g n =
   )
 
 let is_valid g =
-  for_all (fun x -> cardinal x > 0) g
+  Intset.for_all (fun x -> Intset.cardinal x > 0) g
 
 let is_solved g =
-  for_all (fun x -> cardinal x = 1) g
+  Intset.for_all (fun x -> Intset.cardinal x = 1) g
 
 let next_pos (i, j) =
   match j < (size - 1) with {
@@ -97,7 +97,7 @@ let remove i j g n =
 let solve g =
   let rec solve i j g =
     match is_solved &g with {
-    | True -> print &g
+    | True -> Intset.print &g
     | False ->
       let s = get &g (i,j) in
       let (new_i, new_j) = next_pos (i,j) in
@@ -109,10 +109,10 @@ let solve g =
         | False -> ()
         }
       in
-      iter_set try_solution s
+      Intset.iter_set try_solution s
     }
   in solve 0 0 g
 
 let main = 
-    print &easy_board;
-    solve easy_board
+    Intset.print &Intset.easy_board;
+    solve Intset.easy_board

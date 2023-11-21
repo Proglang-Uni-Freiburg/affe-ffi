@@ -157,12 +157,9 @@ let rec ocaml_cmd fmt cmd
   | ValueDecl decl -> ocaml_val_decl fmt decl []
   | Extern ({name = None ; _}, cmds) -> Fmt.pf fmt "(*@[@\n%a@]@\n*)"
     Fmt.(list ~sep:(Fmt.any "@\n") ocaml_cmd) cmds
-  | Extern (n, cmds) -> if !open_modules then
-      Fmt.pf fmt "open@[ %a (*@\n%a@]@.*)"
+  | Extern (n, cmds) -> 
+      Fmt.pf fmt "(*@ extern %a\n%a@]@.*)"
       ocaml_name n
-      Fmt.(list ~sep:(Fmt.any "@\n") ocaml_cmd) cmds
-    else
-      Fmt.pf fmt "(*@\n%a@]@.*)"
       Fmt.(list ~sep:(Fmt.any "@\n") ocaml_cmd) cmds
   | ValueDef d -> Fmt.pf fmt "@[(* val %a *)@]" ocaml_name d.name
   | TypeDecl d -> ocaml_type_decl fmt d
