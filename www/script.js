@@ -1,6 +1,8 @@
 var filename = ""
-var edit = undefined;
-var term = undefined;
+var term0 = undefined;
+var term1 = undefined;
+var term2 = undefined;
+var term3 = undefined;
 
 function loadfile(fn) {
     window.location.hash = fn;
@@ -16,11 +18,11 @@ function loadfile(fn) {
 
 function previewBuiltin(fn) {
     window.location.hash = fn;
-    dir = "builtin/";
     filename = fn;
+    fn = builtinPath(fn);
     $.ajax({
         type: "GET",
-        url: dir + fn,
+        url: fn,
         dataType: 'text',
         success: function (data) { term2.setValue(data); }
     });
@@ -28,20 +30,20 @@ function previewBuiltin(fn) {
 
 $(function () {
     // Creation of editors.
-    edit = CodeMirror(document.getElementById("edit"), {
+    term0 = CodeMirror(document.getElementById("term0"), {
         lineNumbers: true,
         lineWrapping: true,
         theme: "solarized",
         scrollbarStyle: "simple"
     });
 
-    edit.on('cursorActivity',
+    term0.on('cursorActivity',
         function (instance) {
             var pos = instance.getCursor();
             $("#pos").text((pos.line + 1) + ',' + pos.ch);
         });
 
-    term = CodeMirror(document.getElementById("term"), {
+    term1 = CodeMirror(document.getElementById("term1"), {
         lineWrapping: true,
         readOnly: false,
         theme: "solarized",
@@ -67,13 +69,13 @@ $(function () {
     if (s === "") { s = "intro.affe"; };
     loadfile(s);
 
-    $("#edit").resizable({
+    $("#termsTop").resizable({
         handles: "s",
         resize:
             function (event, ui) {
-                $("#terms").css("height", "calc(100% - " + ui.size.height + "px - 3ex)");
-                edit.refresh();
-                term.refresh();
+                $("#termsBot").css("height", "calc(100% - " + ui.size.height + "px - 3ex)");
+                term0.refresh();
+                term1.refresh();
                 term2.refresh();
                 term3.refresh();
             }
@@ -83,9 +85,9 @@ $(function () {
 });
 
 addEventListener("resize", (event) => {
-    $("#edit").css("height", "calc(" + window.innerHeight * 0.7 + "px)");
-    edit.refresh();
-    term.refresh();
+    $("#termsTop").css("height", "calc(" + window.innerHeight * 0.5 + "px)");
+    term0.refresh();
+    term1.refresh();
     term2.refresh();
     term3.refresh();
 });
@@ -108,7 +110,8 @@ function toggleMenu() {
 // var worker_handler = new Object ();
 
 function get_term(i) {
-    if (i == 1) return term;
+    if (i == 0) return term0;
+    else if (i == 1) return term1;
     else if (i == 2) return term2;
     else if (i == 3) return term3;
 }
@@ -153,7 +156,7 @@ function run_ocaml() {
 }
 
 function eval_affe() {
-    var s = edit.getValue();
+    var s = term0.getValue();
     Affe.eval(filename, s);
 }
 

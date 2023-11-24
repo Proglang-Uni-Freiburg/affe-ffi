@@ -25,6 +25,7 @@
 html, body {
   padding          : 0px;
   margin           : 0px;
+  width            : calc(100% - 2px);
   height           : 100%;
 }
 
@@ -100,13 +101,14 @@ a.file:hover {
   color            : #49626a;
 }
 
-#terms {
+.terms {
   width            : 100%;
-  height           : calc(30% - 3ex);
+  height           : calc(50% - 1ex);
   display          : flex;
 }
 
-#terms > div {
+
+.terms > div {
     flex           : 1;
 }
 

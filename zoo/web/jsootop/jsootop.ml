@@ -33,7 +33,7 @@ let preview_builtin s : unit =
 let load_files l =
   let open Js_of_ocaml_tyxml.Tyxml_js in
   let elem s =
-    Html.(li [a ~a:[a_class ["file"]; a_href ("#"^s); a_title s;
+    Html.(li [a ~a:[a_class ["file"]; a_href ("#"); a_title s;
                 a_onclick (fun _ -> preview_builtin s; false);]
             [txt s]])
   in

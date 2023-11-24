@@ -20,7 +20,10 @@
 </head>
 <body>
   <div id="west">
-    <div id="edit"></div>
+    <div class="terms" id="termsTop">    
+        <div id="term0"></div>
+        <div id="term1"></div>
+    </div>
     <div id="panel">
       <p id="pos"></p>
       <a title="run the program" href="#"
@@ -28,13 +31,12 @@
       <a title="clear logs" href="#"
         onclick="clear_term(1);clear_term(2);clear_term(3); return false;">Clear logs</a>
       <a title="clear editor" href="#"
-        onclick="edit.setValue(''); return false;">Clear editor</a>
+        onclick="clear_term(0); return false;">Clear editor</a>
       <a title="run ocaml" href="#"
         onclick="run_ocaml(); return false;">Run OCaml</a>
       <a href="#" id="toggle" onclick="toggleMenu(); return false;">&rarr;</a>
     </div>
-    <div id="terms">
-        <div id="term"></div>
+    <div class="terms" id="termsBot">
         <div id="term2"></div>
         <div id="term3"></div>
     </div>
