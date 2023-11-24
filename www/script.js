@@ -7,71 +7,71 @@ function loadfile(fn) {
     dir = "examples/";
     filename = fn;
     $.ajax({
-        type     : "GET",
-        url      : dir + fn,
-        dataType : 'text',
-        success  : function (data) {edit.setValue(data);}
+        type: "GET",
+        url: dir + fn,
+        dataType: 'text',
+        success: function (data) { edit.setValue(data); }
     });
 }
 
-$(function() {
+$(function () {
     // Creation of editors.
     edit = CodeMirror(document.getElementById("edit"), {
-        lineNumbers    : true,
-        lineWrapping   : true,
-        theme          : "solarized",
-        scrollbarStyle : "simple"
+        lineNumbers: true,
+        lineWrapping: true,
+        theme: "solarized",
+        scrollbarStyle: "simple"
     });
 
     edit.on('cursorActivity',
-            function(instance){
-                var pos = instance.getCursor();
-                $( "#pos" ).text((pos.line+1)+','+pos.ch);
-            });
+        function (instance) {
+            var pos = instance.getCursor();
+            $("#pos").text((pos.line + 1) + ',' + pos.ch);
+        });
 
     term = CodeMirror(document.getElementById("term"), {
-        lineWrapping   : true,
-        readOnly       : false,
-        theme          : "solarized",
-        scrollbarStyle : "simple"
+        lineWrapping: true,
+        readOnly: false,
+        theme: "solarized",
+        scrollbarStyle: "simple"
     });
 
     term2 = CodeMirror(document.getElementById("term2"), {
-        lineWrapping   : true,
-        readOnly       : false,
-        theme          : "solarized",
-        scrollbarStyle : "simple"
+        lineWrapping: true,
+        readOnly: false,
+        theme: "solarized",
+        scrollbarStyle: "simple"
     });
 
     term3 = CodeMirror(document.getElementById("term3"), {
-        lineWrapping   : true,
-        readOnly       : false,
-        theme          : "solarized",
-        scrollbarStyle : "simple"
+        lineWrapping: true,
+        readOnly: false,
+        theme: "solarized",
+        scrollbarStyle: "simple"
     });
 
     // Loading default file in the editor.
-    var s = location.hash.substring(1) ;
+    var s = location.hash.substring(1);
     if (s === "") { s = "intro.affe"; };
     loadfile(s);
 
     // Making things resizable.
-    $( "#west" ).resizable({
-        handles  : "e",
-        minWidth : 400,
-        maxWidth : (window.innerWidth - 400)
+    $("#west").resizable({
+        handles: "e",
+        minWidth: 400,
+        maxWidth: (window.innerWidth - 400)
     });
 
 
-    $( "#edit" ).resizable({
-        handles    : "s",
-        minHeight  : 100,
-        maxHeight  : (window.innerHeight - 120),
-        resize     :
-        function( event, ui ) {
-            $( "#terms" ).css("height", "calc(100% - "+ui.size.height+"px - 3ex)");
-            edit.refresh();
-        }
+    $("#edit").resizable({
+        handles: "s",
+        minHeight: 100,
+        maxHeight: (window.innerHeight - 120),
+        resize:
+            function (event, ui) {
+                $("#terms").css("height", "calc(100% - " + ui.size.height + "px - 3ex)");
+                edit.refresh();
+            }
     });
 
     console.log("Initialized jquery");
@@ -128,4 +128,25 @@ function run_ocaml() {
 function eval_affe() {
     var s = edit.getValue();
     Affe.eval(filename, s);
+}
+
+
+var exampleFileCache = { 'err': "(* Could not load file! *)" };
+
+async function cacheFile(filePath) {
+    fetch(filePath).then((contents) => {
+        contents.text().then((val) => {
+            exampleFileCache[filePath] = val;
+        });
+    }).catch((error) => {
+        console.error(error);
+    });
+}
+
+function load_example(file) {
+    if (exampleFileCache.hasOwnProperty(file)) {
+        return exampleFileCache[file];
+    } else {
+        return exampleFileCache.err;
+    }
 }

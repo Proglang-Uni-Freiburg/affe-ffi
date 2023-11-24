@@ -21,6 +21,18 @@ let flush_term i () : unit =
   Js.Unsafe.fun_call (Js.Unsafe.js_expr "flush_term")
     [|Js.Unsafe.inject i|]
 
+let example_dir = "examples/"
+
+let load_example_str f () : string =
+  Js.Unsafe.fun_call (Js.Unsafe.js_expr "load_example")
+    [|Js.Unsafe.inject (example_dir ^ f)|]
+
+let cache_examples l () : unit =
+  List.iter (fun f ->
+    Js.Unsafe.fun_call (Js.Unsafe.js_expr "cacheFile")
+      [|Js.Unsafe.inject (example_dir ^ f)|]
+  ) l
+
 let term i =
   let t = Format.make_formatter
     (fun s pos len ->

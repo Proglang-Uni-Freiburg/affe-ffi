@@ -36,7 +36,8 @@ let mod_prefix_params mod_name (env : mod_env) params =
 
 let mod_prefix_constructor mod_name (env : mod_env)
   ({name ; constraints ; typ} : T.constructor) : T.constructor
-  = {name=mod_env_prefix mod_name env name ; 
+  = let env = name :: env in
+  {name=mod_env_prefix mod_name env name ; 
     constraints=mod_prefix_constraints mod_name env constraints ;
     typ=(
       match typ with
@@ -60,7 +61,7 @@ let mod_prefix_cmd mod_name (env : mod_env) cmd
       params=mod_prefix_params mod_name env params ; 
       kind ;
       constraints=mod_prefix_constraints mod_name env constraints;
-      constructor}, env
+      constructor=mod_prefix_constructors mod_name env constructor}, env
   | a -> a, env
 
 let rec mod_prefix_cmds mod_name (env : mod_env) cmds

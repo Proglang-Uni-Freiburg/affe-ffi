@@ -21,10 +21,13 @@ vsc_extension:
 	else echo "no `~/.vscode/extensions/` folder found"; \
 	fi
 
-%.affe:
+%.affe: affe
 	dune exec -- lang/affe/affe.exe lang/affe/affi/examples/$@ -a out/affiout.ml
 	dune build out/
 	dune exec out/affiout.exe
+
+interactive: affe
+	dune exec lang/affe/affe.exe
 
 clean:
 	dune clean

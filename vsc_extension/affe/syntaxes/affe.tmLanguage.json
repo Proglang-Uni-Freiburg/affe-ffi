@@ -159,13 +159,10 @@
                 },
                 {
                     "comment": "borrow",
-                    "match": "[[:space:]](&|&&|&!|&&!)[^&![:space:]]",
+                    "match": "(&|&&|&!|&&!)",
                     "captures": {
                         "1": {
                             "name": "markup.bold.affe"
-                        },
-                        "2": {
-                            "name": "entity.name.affe"
                         }
                     }
                 },

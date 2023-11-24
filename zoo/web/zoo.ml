@@ -113,12 +113,13 @@ struct
         syntax_error ~loc:(location_of_lex lex) "syntax error"
 
   (** Load directives from the given file. *)
-  let use_file ctx (filename, content, ffi_out) =
+  let rec use_file ctx (filename, content, ffi_out) =
     match L.file_parser with
     | Some f ->
       let cmds = read_file (wrap_syntax_errors f) (filename, content) in
       let ctx = List.fold_left
-        (L.exec (fun _ _ -> fatal_error "Cannot load files in the web toplevel"))
+        (L.exec (fun env f ->
+          use_file env (f, (Zoo_web.load_example_str f ()), ffi_out)))
         ctx cmds in (
           L.ffi ffi_out cmds;
           ctx
@@ -147,7 +148,7 @@ struct
 
   let load_files l =
     let open Js_of_ocaml_tyxml.Tyxml_js in
-    
+    Zoo_web.cache_examples l ();
     let elem s =
       Html.(li [a ~a:[a_class ["file"]; a_href ("#"^s); a_title s;
                   a_onclick (fun _ -> Zoo_web.load_file s; false);]

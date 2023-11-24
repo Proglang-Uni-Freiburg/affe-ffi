@@ -15,6 +15,7 @@ let () =
     (fun s -> add_to_term 3 s; flush_term 3 ())
 
 let execute code =
+  JsooTop.initialize ();
   let code = Js.to_string code in
   let buffer = Buffer.create 100 in
   let formatter = Format.formatter_of_buffer buffer in

@@ -1,0 +1,13 @@
+extern Foo (
+    type t
+    val bar : t
+    val print : t -> unit
+    type ('a : 'k) option : 'k = None | Some of 'a
+)
+
+extern dummy : Foo.t Foo.option = <| Some Foo.bar |>
+
+let main = let () = match dummy with {
+    | Foo.None -> ()
+    | Foo.Some s -> Foo.print s
+    } in ()

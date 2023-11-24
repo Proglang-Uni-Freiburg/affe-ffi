@@ -29,9 +29,25 @@ in the bottom right. Beware, this is a prototype: error messages
 
 let l = [
   "intro.affe";
-  "channel.affe";
+  "arraydef.affe";
+  "basics.affe";
+  "constraints.affe";
+  "cow.affe";
+  "example.affe";
+  "example2.affe";
+  "fail.affe";
+  "linstr.affe";
+  "moduleimport.affe";
+  "nonlexical.affe";
+  "optstrlist.affe";
+  "patmatch.affe";
+  "pool.affe";
+  "queuedef.affe";
+  "region.affe";
   "sessions.affe";
   "sudoku.affe";
+  "test_un.affe";
+  "types.affe"
 ]
 
 let () =
