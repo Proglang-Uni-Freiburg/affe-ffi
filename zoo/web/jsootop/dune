@@ -1,6 +1,6 @@
 (executable
   (name jsootop)
-  (libraries js_of_ocaml js_of_ocaml-compiler js_of_ocaml-toplevel compiler-libs)
+  (libraries js_of_ocaml js_of_ocaml-compiler js_of_ocaml-toplevel compiler-libs js_of_ocaml-tyxml)
   (preprocess (pps js_of_ocaml-ppx))
   (modes js)
   (js_of_ocaml

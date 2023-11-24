@@ -37,6 +37,10 @@ clean:
 web:
 	dune build lang/affe/affe_www.bc.js --profile=release
 	dune build zoo/web/jsootop/jsootop.bc.js --profile=release
+	@mkdir -p www/builtin
+	@cp  out/builtin/* www/builtin/
+	@mkdir -p www/examples
+	@cp lang/affe/affi/examples/* www/examples/
 	@cp _build/default/lang/affe/affe_www.bc.js www
 	@cp _build/default/zoo/web/jsootop/jsootop.bc.js www
 

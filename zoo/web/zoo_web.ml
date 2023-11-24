@@ -24,7 +24,7 @@ let flush_term i () : unit =
 let example_dir = "examples/"
 
 let load_example_str f () : string =
-  Js.Unsafe.fun_call (Js.Unsafe.js_expr "load_example")
+  Js.Unsafe.fun_call (Js.Unsafe.js_expr "loadExample")
     [|Js.Unsafe.inject (example_dir ^ f)|]
 
 let cache_examples l () : unit =

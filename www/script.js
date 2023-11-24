@@ -14,6 +14,18 @@ function loadfile(fn) {
     });
 }
 
+function previewBuiltin(fn) {
+    window.location.hash = fn;
+    dir = "builtin/";
+    filename = fn;
+    $.ajax({
+        type: "GET",
+        url: dir + fn,
+        dataType: 'text',
+        success: function (data) { term2.setValue(data); }
+    });
+}
+
 $(function () {
     // Creation of editors.
     edit = CodeMirror(document.getElementById("edit"), {
@@ -55,28 +67,43 @@ $(function () {
     if (s === "") { s = "intro.affe"; };
     loadfile(s);
 
-    // Making things resizable.
-    $("#west").resizable({
-        handles: "e",
-        minWidth: 400,
-        maxWidth: (window.innerWidth - 400)
-    });
-
-
     $("#edit").resizable({
         handles: "s",
-        minHeight: 100,
-        maxHeight: (window.innerHeight - 120),
         resize:
             function (event, ui) {
                 $("#terms").css("height", "calc(100% - " + ui.size.height + "px - 3ex)");
                 edit.refresh();
+                term.refresh();
+                term2.refresh();
+                term3.refresh();
             }
     });
 
     console.log("Initialized jquery");
 });
 
+addEventListener("resize", (event) => {
+    $("#edit").css("height", "calc(" + window.innerHeight * 0.7 + "px)");
+    edit.refresh();
+    term.refresh();
+    term2.refresh();
+    term3.refresh();
+});
+
+function toggleMenu() {
+    west = document.getElementById("west");
+    east = document.getElementById("east");
+    button = document.getElementById("toggle");
+    if (east.hidden) {
+        button.innerText = "\u2192";
+        east.hidden = false;
+        west.setAttribute("style", "width:70%");
+    } else {
+        button.innerText = "\u2190";
+        east.hidden = true;
+        west.setAttribute("style", "width:100%");
+    }
+}
 
 // var worker_handler = new Object ();
 
@@ -133,6 +160,8 @@ function eval_affe() {
 
 var exampleFileCache = { 'err': "(* Could not load file! *)" };
 
+var builtinFileCache = { 'err': "(* Could not load file! *)" };
+
 async function cacheFile(filePath) {
     fetch(filePath).then((contents) => {
         contents.text().then((val) => {
@@ -143,7 +172,30 @@ async function cacheFile(filePath) {
     });
 }
 
-function load_example(file) {
+const builtinPath = s => `builtin/${s.charAt(0).toLowerCase()}${s.slice(1)}.ml`;
+
+async function cacheBuiltin(moduleName) {
+    let filePath = builtinPath(moduleName);
+    fetch(filePath).then((contents) => {
+        contents.text().then((val) => {
+            builtinFileCache[filePath] = val;
+        });
+    }).catch((error) => {
+        console.error(error);
+    });
+}
+
+function loadBuiltin(moduleName) {
+    let filePath = builtinPath(moduleName);
+    if (builtinFileCache.hasOwnProperty(filePath)) {
+        let val = builtinFileCache[filePath];
+        return `module ${moduleName} = struct\n${val}\nend\n`;
+    } else {
+        return builtinFileCache.err;
+    }
+}
+
+function loadExample(file) {
     if (exampleFileCache.hasOwnProperty(file)) {
         return exampleFileCache[file];
     } else {

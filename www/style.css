@@ -129,3 +129,20 @@ a.file:hover {
 .error {
   color            : #d33682;
 }
+
+.files-div {
+    padding: 0px;
+    font-size: smaller;
+}
+
+.files-column {
+    width: 40%;
+    float: left;
+    padding: 20px;
+}
+
+#toggle {
+    float: right;
+    padding-right: 20px;
+    padding-left: 20px;
+}

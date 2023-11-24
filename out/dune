@@ -1,1 +1,3 @@
 (executable (name affiout))
+
+(include_subdirs unqualified)

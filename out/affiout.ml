@@ -4,7 +4,7 @@
    val print
    type ('a) option = None | Some of 'a
 *)
-let dummy  = ( Some Foo.bar )
+let dummy  = ( Foo.Some Foo.bar )
 let main  =
 (let () = match dummy with
             | Foo.None -> ()

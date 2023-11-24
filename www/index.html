@@ -31,6 +31,7 @@
         onclick="edit.setValue(''); return false;">Clear editor</a>
       <a title="run ocaml" href="#"
         onclick="run_ocaml(); return false;">Run OCaml</a>
+      <a href="#" id="toggle" onclick="toggleMenu(); return false;">&rarr;</a>
     </div>
     <div id="terms">
         <div id="term"></div>
@@ -44,7 +45,14 @@
       <div id="content">
       </div>
       <h2>List of examples</h2>
-      <div id="examples"></div>
+      <div class="files-div">
+        <div class="files-column">
+          <div id="examples">affe examples</div>
+        </div>
+        <div class="files-column">
+          <div id="builtin">builtin OCaml modules</div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

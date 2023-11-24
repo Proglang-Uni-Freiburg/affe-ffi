@@ -1,9 +1,0 @@
-## Hello
-
-let n = 40
-
-extern print i : int -> unit = <|
-    print_int i
-|>
-
-let main = let () = print (n + 2) in ()
