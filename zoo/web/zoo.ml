@@ -134,8 +134,6 @@ struct
     begin try
         Zoo_web.clear_term 1 ();
         Zoo_web.clear_term 2 ();
-        Zoo_web.add_to_term 1 "(* Starting typing *)\n";
-        Zoo_web.add_to_term 2 "(* OCaml Code *)\n";
         let _ = use_file L.initial_environment (name, s, ffi_out) in
         ()
       with

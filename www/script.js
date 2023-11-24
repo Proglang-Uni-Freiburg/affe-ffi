@@ -12,7 +12,7 @@ function loadfile(fn) {
         type: "GET",
         url: dir + fn,
         dataType: 'text',
-        success: function (data) { edit.setValue(data); }
+        success: function (data) { term0.setValue(data); }
     });
 }
 
@@ -81,6 +81,10 @@ $(function () {
             }
     });
 
+    clear_term(0);
+    clear_term(1);
+    clear_term(2);
+    clear_term(3);
     console.log("Initialized jquery");
 });
 
@@ -117,7 +121,8 @@ function get_term(i) {
 }
 
 function clear_term(i) {
-    get_term(i).setValue('')
+    const info = ["affe editor", "affe type output", "ocaml from affe", "ocaml out"]
+    get_term(i).setValue(`(* ${info[i]} *)\n`)
 }
 
 function add_to_term(i, s) {
