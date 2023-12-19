@@ -5,9 +5,11 @@ extern (
     val print_endline : string -> unit
 )
 
-extern SDefinition (
-    val s : string
+extern Foo (
+    val bar : string
 )
+
+let s = Foo.bar
 
 type cases = FST of int | SND of string
 

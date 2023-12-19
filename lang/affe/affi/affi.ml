@@ -180,5 +180,5 @@ let ocaml_cmds fmt lst
 
 
 let to_ocaml cmd_fmt cmds =
-  Format.printf "%a@.\n" ocaml_cmds cmds; (* print *)
-  Fmt.pf cmd_fmt "%a" ocaml_cmds cmds (* and write to file *)
+  if !Printer.debug then Format.printf "%a@.\n" ocaml_cmds cmds;
+  Fmt.pf cmd_fmt "%a" ocaml_cmds cmds (* write to file *)

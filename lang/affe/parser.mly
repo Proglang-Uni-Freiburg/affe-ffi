@@ -81,6 +81,8 @@ command:
     { ValueDef { name ; typ } }
   | typdecl=type_decl { typdecl }
   | IMPORT s = STRING { Import s }
+  | EXTERN VAL name=name DOUBLECOLON typ=type_scheme
+    { Extern ({ name = None ; id = -1 }, [ValueDef { name ; typ }]) }
   | EXTERN typedecl=type_decl code=OCAML
     { OCAML (typedecl, [], code) }
   | EXTERN typedecl=type_decl

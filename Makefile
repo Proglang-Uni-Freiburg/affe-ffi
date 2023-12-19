@@ -14,17 +14,18 @@ test:
 
 vsc_extension:
 	@if [ -d ~/.vscode/extensions/ ]; then \
-		if [ -d ~/.vscode/extensions/affe/ ]; then \
-			rm -rf ~/.vscode/extensions/affe/ ; \
-		fi; \
+		rm -rf ~/.vscode/extensions/affe/ ; \
 		cp -r vsc_extension/affe ~/.vscode/extensions/affe ; \
 	else echo "no `~/.vscode/extensions/` folder found"; \
 	fi
 
 %.affe: affe
 	dune exec -- lang/affe/affe.exe lang/affe/affi/examples/$@ -a out/affiout.ml
-	dune build out/
-	dune exec out/affiout.exe
+	@echo "-----------------ocaml-----------------"
+	@cat out/affiout.ml
+	@echo "------------------out------------------"
+	@dune build out/
+	@dune exec out/affiout.exe
 
 interactive: affe
 	dune exec lang/affe/affe.exe

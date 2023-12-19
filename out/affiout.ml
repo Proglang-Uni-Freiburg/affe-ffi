@@ -1,13 +1,23 @@
+let print i = ( print_int i ; print_endline "" )
+(*
+  type string  
+  val print_int
+  val print_endline
+  type ('a) option = None | Some of 'a
+*)
+(*
+  type ('a) option = None | Some of 'a
+*)
+(*
+  val print_endline
+*)
+type ('a) option' = 'a option 
 (* extern Foo
-   type t  
    val bar
    val print
    type ('a) option = None | Some of 'a
 *)
-let dummy  = ( Foo.Some Foo.bar )
-let main  =
-(let () = match dummy with
-            | Foo.None -> ()
-            | Foo.Some (s) -> Foo.print s
- in ())
+let printbar  = (fun () -> Foo.print Foo.bar)
+let main  = (let () = print 42;
+                      printbar () in ())
 

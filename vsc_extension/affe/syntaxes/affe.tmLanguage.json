@@ -94,6 +94,21 @@
                 },
                 {
                     "comment": "val declaration",
+                    "match": "(extern[[:space:]]+|)(val)[[:space:]]+([[:lower:]_][[:word:]']*)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.affe"
+                        },
+                        "2": {
+                            "name": "keyword.affe"
+                        },
+                        "3": {
+                            "name": "entity.name.function.binding.affe"
+                        }
+                    }
+                },
+                {
+                    "comment": "val declaration",
                     "match": "(val)[[:space:]]+([[:lower:]_][[:word:]']*)",
                     "captures": {
                         "1": {

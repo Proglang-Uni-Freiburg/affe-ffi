@@ -1,4 +1,3 @@
-type t = string
 let bar = "hello world"
 let print = print_endline
 

@@ -217,9 +217,7 @@ struct
         match !affiout with
         | None -> ctx
         | Some _ ->
-          Format.printf "------------%s:------------\n" filename;
           L.ffi ffi_cmds cmds;
-          Format.printf "------------------------------\n";
           ctx
        )
     | None ->

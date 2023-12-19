@@ -1,0 +1,38 @@
+## Hello
+
+# the following are the main features of the ocaml-ffi
+
+# this is inline Ocaml code. The type cannot be inferred.
+# in between <| |> may be an arbitrary ocaml expression
+extern print i : int -> unit = <| print_int i ; print_endline "" |>
+
+# use builtin ocaml functions/types
+extern (
+    type string
+    val print_int : int -> unit
+    val print_endline : string -> unit
+    type ('a : 'k) option : 'k = None | Some of 'a
+)
+
+# single builtin type/val declarations
+extern type ('a : 'k) option : 'k = None | Some of 'a
+extern val print_endline : string -> unit
+
+# type alias (only without constructors)
+extern type ('a : 'k) option' : 'k <| 'a option |>
+
+# import ocaml module named Foo 
+# (which, of course, must be linked with the output .ml module)
+extern Foo (
+    val bar : string
+    val print : string -> unit
+    type ('a : 'k) option : 'k = None | Some of 'a
+)
+
+# access from module
+let printbar () = Foo.print Foo.bar
+
+let main = let () = 
+    print 42;
+    printbar ()
+    in ()

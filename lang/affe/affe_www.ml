@@ -15,9 +15,12 @@ let doc =
   <a href="https://github.com/Drup/pl-experiments">on github</a>.
 </p>-->
 <p>
-You can find a list of examples below. Only typing is implemented is this
-online demo. The result of the typing (or the appropriate type error) is displayed
-in the bottom right. Beware, this is a prototype: error messages
+You can find a list of examples below. "Run" runs the typing and
+transpilation to OCaml.
+The result of the typing (or the appropriate type error) is displayed
+in the top right. The OCaml code is displayed on the bottom left.
+"Run OCaml" runs the currently displayed OCaml code and displays the output of that on the bottom right.
+Beware, this is a prototype: error messages
 (and the UI in general) are research-quality.
 </p>
 <p>
