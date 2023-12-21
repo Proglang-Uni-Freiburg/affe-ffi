@@ -122,7 +122,7 @@ function get_term(i) {
 
 function clear_term(i) {
     const info = ["affe editor", "affe type output", "ocaml from affe", "ocaml out"]
-    get_term(i).setValue(`(* ${info[i]} *)\n`)
+    get_term(i).setValue(i == 0 ? `## ${info[i]}\n` : `(* ${info[i]} *)\n`)
 }
 
 function add_to_term(i, s) {
