@@ -2,11 +2,11 @@
 
 # the following are the main features of the ocaml-ffi
 
-# this is inline Ocaml code. The type cannot be inferred.
-# in between <| |> may be an arbitrary ocaml expression
+# this is inline OCaml code. The type cannot be inferred.
+# in between <| |> may be an arbitrary OCaml expression
 extern print i : int -> unit = <| print_int i ; print_endline "" |>
 
-# use builtin ocaml functions/types
+# use builtin OCaml functions/types
 extern (
     type string
     val print_int : int -> unit
@@ -18,13 +18,22 @@ extern (
 extern type ('a : 'k) option : 'k = None | Some of 'a
 extern val print_endline : string -> unit
 
-# import ocaml module named Foo 
+# import OCaml module named Foo 
 # (which, of course, must be linked with the output .ml module)
 extern Foo (
     val bar : string
     val print : string -> unit
     type ('a : 'k) option : 'k = None | Some of 'a
 )
+
+# importing from OCaml's standard library is also possible
+extern Array (
+   val init : \ 'k ('a : _). int -> (int -{'k}> 'a) -{'k}> 'a array
+   val get : \ 'k ('a:_). &('k, 'a array) -> int -> 'a
+)
+
+let arr = Array.init 0 (fun i -> 0)
+let x = Array.get &arr 0
 
 # access from module
 let printbar () = Foo.print Foo.bar
