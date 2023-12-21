@@ -32,7 +32,7 @@ extern Array (
    val get : \ 'k ('a:_). &('k, 'a array) -> int -> 'a
 )
 
-let arr = Array.init 0 (fun i -> 0)
+let arr = Array.init 1 (fun i -> 42)
 let x = Array.get &arr 0
 
 # access from module
