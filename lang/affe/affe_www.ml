@@ -10,13 +10,17 @@ let doc =
  In particular, Affe is functional with arbitrary side effects and
  complete type inference (i.e., users never need to write type annotations).
 </p>
-<!--<p>
+<p>
   The implementation is available
-  <a href="https://github.com/Drup/pl-experiments">on github</a>.
-</p>-->
+  <a href="https://github.com/lukaskleinert/affe-ffi">https://github.com/lukaskleinert/affe-ffi</a>.
+</p>
+<p>
+  The original implementation of the affe language was taken from
+  <a href="https://github.com/Drup/pl-experiments">https://github.com/Drup/pl-experiments</a>.
+</p>
 <p>
 You can find a list of examples below. "Run" runs the typing and
-transpilation to OCaml.
+translation to OCaml.
 The result of the typing (or the appropriate type error) is displayed
 in the top right. The OCaml code is displayed on the bottom left.
 "Run OCaml" runs the currently displayed OCaml code and displays the output of that on the bottom right.
@@ -49,8 +53,7 @@ let l = [
   "region.affe";
   "sessions.affe";
   "sudoku.affe";
-  "test_un.affe";
-  "types.affe"
+  "test_un.affe"
 ]
 
 let () =

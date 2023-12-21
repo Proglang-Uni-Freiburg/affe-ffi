@@ -18,9 +18,6 @@ extern (
 extern type ('a : 'k) option : 'k = None | Some of 'a
 extern val print_endline : string -> unit
 
-# type alias (only without constructors)
-extern type ('a : 'k) option' : 'k <| 'a option |>
-
 # import ocaml module named Foo 
 # (which, of course, must be linked with the output .ml module)
 extern Foo (

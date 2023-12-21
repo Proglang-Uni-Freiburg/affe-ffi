@@ -4,7 +4,7 @@ An adaptation of https://github.com/Drup/pl-experiments that adds an ocaml-ffi t
 
 # How to use
 
-To compile a file, use `dune exec -- lang/affe/affe.exe <in file> -a <out file>`
+To translate an affe file to OCaml, use `dune exec -- lang/affe/affe.exe <in file> -a <out file>`
 
 Or simply use `make <name>.affe` to compile an example file from [lang/affe/affi/examples](lang/affe/affi/examples). Eg. `make example.affe`
 

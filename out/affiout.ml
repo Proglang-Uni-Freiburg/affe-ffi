@@ -11,7 +11,6 @@ let print i = ( print_int i ; print_endline "" )
 (*
   val print_endline
 *)
-type ('a) option' = 'a option 
 (* extern Foo
    val bar
    val print
