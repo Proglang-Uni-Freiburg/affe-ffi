@@ -32,13 +32,13 @@ extern Array (
    val get : \ 'k ('a:_). &('k, 'a array) -> int -> 'a
 )
 
-let arr = Array.init 1 (fun i -> 42)
-let x = Array.get &arr 0
-
 # access from module
 let printbar () = Foo.print Foo.bar
 
+let arr = Array.init 1 (fun i -> 42)
+let x = Array.get &arr 0
+
 let main = let () = 
-    print 42;
+    print x;
     printbar ()
     in ()
