@@ -1,0 +1,18 @@
+extern (
+    type string
+    val print_int : int -> unit
+    val print_endline : string -> unit
+)
+
+extern Nested (
+    val value : string # = "value"
+    val Inner.value : int # = 42
+)
+
+extern val Nested.value : string
+extern val Nested.Inner.value : int
+
+let main = let () =
+    print_int Nested.Inner.value ;
+    print_endline Nested.value
+    in ()

@@ -99,10 +99,11 @@ let rec ocaml_val_decl fmt decl args
   = match decl.expr with
   | Lambda (PVar n, e) -> 
     ocaml_val_decl fmt ({rec_flag=decl.rec_flag ; name=decl.name ; expr=e}) (n :: args)
-  | _ -> Fmt.pf fmt "@[let %a%a %a =@ %a@]"
+  | _ -> Fmt.pf fmt "@[<2>let %a%a %a%s=@ %a@]"
     ocaml_rec_flag decl.rec_flag
     ocaml_name decl.name
     Fmt.(list ~sep:(Fmt.any "@ ") (ocaml_name_unused decl.expr)) (List.rev args)
+    (if List.compare_length_with args 0 = 0 then "" else " ")
     ocaml_expr_with_paren decl.expr
 
 let ocaml_param fmt (param : Name.t)
@@ -155,23 +156,32 @@ let ocaml_type_decl fmt (decl : T.decl)
 let rec ocaml_cmd fmt cmd
   = match cmd with
   | ValueDecl decl -> ocaml_val_decl fmt decl []
-  | Extern ({name = None ; _}, cmds) -> Fmt.pf fmt "(*@[@\n%a@]@\n*)"
-    Fmt.(list ~sep:(Fmt.any "@\n") ocaml_cmd) cmds
+  | Extern ({name = None ; _}, cmds) -> 
+    let fmt_ex =
+    if List.length cmds = 1 
+      then Fmt.pf fmt "@[(* %a *)@]@\n" 
+      else Fmt.pf fmt "(*@[@\n%a@]@\n*)"
+    in fmt_ex Fmt.(list ~sep:(Fmt.any "@\n") uncomment_val) cmds
   | Extern (n, cmds) -> 
-      Fmt.pf fmt "(* @[extern %a@\n%a@]@.*)"
+      Fmt.pf fmt "(*@\n@[<2>extern %a@\n%a@]@.*)"
       ocaml_name n
-      Fmt.(list ~sep:(Fmt.any "@\n") ocaml_cmd) cmds
-  | ValueDef d -> Fmt.pf fmt "@[val %a@]" ocaml_name d.name
+      Fmt.(list ~sep:(Fmt.any "@\n") uncomment_val) cmds
+  | ValueDef d -> Fmt.pf fmt "@[(* val %a *)@]" ocaml_name d.name
   | TypeDecl d -> ocaml_type_decl fmt d
-  | OCAML (ValueDef {name ; _},args,code) -> Fmt.pf fmt "@[let %a %a = (@[%s@])@]" 
+  | OCAML (ValueDef {name ; _}, args, code) -> Fmt.pf fmt "@[<2>let %a %a%s= (@[%s@])@]" 
     ocaml_name name
     Fmt.(list ~sep:(Fmt.any "@ ") ocaml_pattern) args
+    (if List.compare_length_with args 0 = 0 then "" else " ")
     code
   | OCAML (TypeDecl ty, [], code) -> Fmt.pf fmt "@[type %a%a =%s@]"
     ocaml_params (List.map fst ty.params)
     ocaml_name ty.name
     code
   | _ -> ()
+and uncomment_val fmt cmd
+  = match cmd with
+  | ValueDef d -> Fmt.pf fmt "@[val %a @]" ocaml_name d.name
+  | _ -> ocaml_cmd fmt cmd
 
 let ocaml_cmds fmt lst
   = match lst with

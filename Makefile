@@ -1,6 +1,6 @@
 .PHONY: affe hm web all clean test vsc_extension
 
-all: affe hm web
+all: affe hm web test vsc_extension
 
 
 affe:
@@ -16,7 +16,7 @@ vsc_extension:
 	@if [ -d ~/.vscode/extensions/ ]; then \
 		rm -rf ~/.vscode/extensions/affe/ ; \
 		cp -r vsc_extension/affe ~/.vscode/extensions/affe ; \
-	else echo "no `~/.vscode/extensions/` folder found"; \
+	else echo "no '~/.vscode/extensions/' folder found" >&2 ; \
 	fi
 
 %.affe: affe

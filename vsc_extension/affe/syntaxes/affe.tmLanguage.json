@@ -108,20 +108,8 @@
                     }
                 },
                 {
-                    "comment": "val declaration",
-                    "match": "(val)[[:space:]]+([[:lower:]_][[:word:]']*)",
-                    "captures": {
-                        "1": {
-                            "name": "keyword.affe"
-                        },
-                        "2": {
-                            "name": "entity.name.function.binding.affe"
-                        }
-                    }
-                },
-                {
                     "comment": "extern declaration",
-                    "match": "(extern)[[:space:]]+([[:lower:]_][[:word:]']*)",
+                    "match": "(extern)[[:space:]]+(?!val|type[[:space:]])([[:lower:]_][[:word:]']*)",
                     "captures": {
                         "1": {
                             "name": "keyword.control.affe"
@@ -202,7 +190,7 @@
             "patterns": [
                 {
                     "name": "keyword.affe",
-                    "match": "\\b(match|with|rec|in|fun|of|let)\\b"
+                    "match": "\\b(match|with|rec|in|fun|val|type|of|let)\\b"
                 },
                 {
                     "name": "keyword.control.affe",
@@ -299,7 +287,7 @@
                     "match": "\\b_\\b"
                 },
                 {
-                    "comment": "capital identifier for constructor, exception, or module",
+                    "comment": "capital identifier for constructor or module",
                     "name": "constant.language.capital-identifier.affe",
                     "match": "\\b[[:upper:]][[:word:]']*('|\\b)"
                 },
