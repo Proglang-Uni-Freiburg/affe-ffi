@@ -1,12 +1,25 @@
 ## Hello
 
-# the following are the main features of the ocaml-ffi
+# The following are the main features of the OCaml-ffi
 
-# this is inline OCaml code. The type cannot be inferred.
-# in between <| |> may be an arbitrary OCaml expression
-extern print i : int -> unit = <| print_int i ; print_endline "" |>
+## Importing from OCaml
 
-# use builtin OCaml functions/types
+# using the `extern`-keyword before a type or val declarations tells Affe to
+# add the typing information to the environment as usual, but not to add any
+# code to the compiled OCaml-output.
+
+extern type string
+extern val print_int : int -> unit
+extern val print_endline : string -> unit
+extern type ('a : 'k) option : 'k = None | Some of 'a
+
+# This is enough to make the declarations available if they are already 
+# built-in OCaml.
+
+let func () = print_int 4
+
+# multiple `extern`-declarations can also be condensed into one block
+
 extern (
     type string
     val print_int : int -> unit
@@ -14,31 +27,57 @@ extern (
     type ('a : 'k) option : 'k = None | Some of 'a
 )
 
-# single builtin type/val declarations
-extern type ('a : 'k) option : 'k = None | Some of 'a
-extern val print_endline : string -> unit
+# To import a val or type from a specific Ocaml module, the module name
+# is added after the `extern`-keyword.
 
-# import OCaml module named Foo 
-# (which, of course, must be linked with the output .ml module)
 extern Foo (
     val bar : string
     val print : string -> unit
     type ('a : 'k) option : 'k = None | Some of 'a
 )
 
-# importing from OCaml's standard library is also possible
+# This has the same effect as declaring the vals/types separately, renamed
+# with the module name prefix
+
+extern val Foo.bar : string
+extern val Foo.print : string -> unit
+extern type ('a : 'k) Foo.option : 'k = Foo.None | Foo.Some of 'a
+
+# The variables can then be accessed in any later expression with the
+# same module name prefix
+
+let printbar () = Foo.print Foo.bar
+
+# Note that the module Foo is eventually linked to the output OCaml-code 
+# to make the definitions available
+
+# OCaml's built-in modules (such as Array) can also be directly imported
+
 extern Array (
    val init : \ 'k ('a : _). int -> (int -{'k}> 'a) -{'k}> 'a array
    val get : \ 'k ('a:_). &('k, 'a array) -> int -> 'a
 )
 
-# access from module
-let printbar () = Foo.print Foo.bar
+let arr = Array.init 1 (fun i -> 2)
+let two = Array.get &arr 0
 
-let arr = Array.init 1 (fun i -> 42)
-let x = Array.get &arr 0
+## Inline OCaml code
+
+# Any OCaml expression can be assigned with the following syntax
+
+# extern <name> <args*> : type = <| ... |>
+
+# Note that the type of the expression cannot be inferred and must be given
+# explicitly. It is the users responsibility to ensure that the types match.
+# In the case that <name> is a function type, a list of parameter names can be
+# provided that can also be used in the OCaml expression.
+
+extern print i s : int -> string -> unit = <| print_int i ; print_endline s |>
+extern ex : string = <| "!" |>
+
 
 let main = let () = 
-    print x;
+    func ();
+    print two ex;
     printbar ()
     in ()

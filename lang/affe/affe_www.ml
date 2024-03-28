@@ -45,6 +45,7 @@ let l = [
   "fail.affe";
   "linstr.affe";
   "moduleimport.affe";
+  "nested_module.affe";
   "nonlexical.affe";
   "optstrlist.affe";
   "patmatch.affe";

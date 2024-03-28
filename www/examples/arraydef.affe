@@ -10,5 +10,5 @@ extern array_get (arr, idx) : \ 'k ('a:_). &('k, 'a array) * int -> 'a
 extern array_set (arr, idx, v) : \ 'k ('a:_). &!('k, 'a array) * int * 'a -> unit
     = <| Array.set arr idx v |>
 
-# importing from the standard library is also possible
+# importing from the ocaml standard library is also possible
 # see intro.affe
