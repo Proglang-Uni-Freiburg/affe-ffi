@@ -19,6 +19,6 @@ Have a look at [lang/affe/affi/examples/intro.affe](lang/affe/affi/examples/intr
 
 ## Adding more example files
 
-New .affe example files for the interactive web application can be added to the [lang/affe/affi/examples](lang/affe/affi/examples) folder. You then have to add the filename to the `l`-list in the file [lang/affe/affe_www.ml]
+New .affe example files for the interactive web application can be added to the [lang/affe/affi/examples](lang/affe/affi/examples) folder. You then have to add the filename to the `l`-list in the file [lang/affe/affe_www.ml](lang/affe/affe_www.ml)
 
 If you want to add a new "builtin" OCaml-module for the web application, you have to add that file (`.ml` file ending) to [www/builtin/](www/builtin/). You then have to add the module name (file basename starting with capital letter) to the `builtins`-list in the file [zoo/web/jsootop/jsootop.ml](zoo/web/jsootop/jsootop.ml)
