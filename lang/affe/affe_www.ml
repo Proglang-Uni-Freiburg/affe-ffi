@@ -7,6 +7,7 @@ let doc =
 <p>
   The original implementation of the Affe language was taken from
   <a href="https://github.com/Drup/pl-experiments">https://github.com/Drup/pl-experiments</a>.
+  This version features an OCaml-ffi and Affe to OCaml translator.
 </p>
 <p>
  This language aims to prevent linearity violations, notably bugs such as 
@@ -16,13 +17,14 @@ let doc =
  Beware, this is a prototype: error messages
 (and the UI in general) are research-quality.
 </p>
-
+<h2> How to use </h2>
 <p>
 You can find a list of examples below. "Run" runs the typing and
 translation to OCaml.
 The result of the typing (or the appropriate type error) is displayed
 on the top right. The OCaml code is displayed on the bottom left.
-"Run OCaml" runs the currently displayed OCaml code and displays the output of that on the bottom right.
+"Run OCaml" runs the currently displayed OCaml code with js_of_ocaml-toplevel 
+and displays the output of that on the bottom right.
 </p>
 <p>
   <em>Have fun!</em>
@@ -38,7 +40,6 @@ let l = [
   "constraints.affe";
   "cow.affe";
   "example.affe";
-  "example2.affe";
   "fail.affe";
   "linstr.affe";
   "moduleimport.affe";
@@ -51,7 +52,8 @@ let l = [
   "region.affe";
   "sessions.affe";
   "sudoku.affe";
-  "test_un.affe"
+  "test_un.affe";
+  "unused.affe";
 ]
 
 let () =

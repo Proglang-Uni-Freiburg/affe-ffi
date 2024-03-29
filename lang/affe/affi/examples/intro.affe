@@ -66,6 +66,10 @@ let arr = Array.init 1 (fun i -> 2)
 
 # extern <name> <args*> : type = <| ... |>
 
+# The translated OCaml code will look like this:
+
+# let <name> <args*> = ( ... )
+
 # Note that the type of the expression cannot be inferred and must be given
 # explicitly. It is the users responsibility to ensure that the types match.
 # Type mismatches may result in runtime errors.
@@ -84,9 +88,12 @@ extern ex : string = <| "!" |>
 # and kinds from type declarations. Some minor changes are match syntax and 
 # True/False constants
 
-let two = match True with {
-    | True -> Array.get &arr 0
-    | False -> 0
+type ('a: 'k, 'b: 'k) either = Left of 'a | Right of 'b
+
+let two = let x = Left True in 
+    match x with {
+    | Left True -> Array.get &arr 0
+    | u -> 0
 }
 
 let main = let () = 

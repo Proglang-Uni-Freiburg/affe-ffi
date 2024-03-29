@@ -34,9 +34,12 @@ extern Array
 let arr = (Array.init 1 (fun _i -> 2))
 let print i s = ( print_int i ; print_endline s )
 let ex = ( "!" )
-let two = (match true with
-             | true -> Array.get arr 0
-             | false -> 0)
+type ('a, 'b) either = Left of 'a | Right of 'b
+let two =
+  (let x = Left true in
+   match x with
+     | Left (true) -> Array.get arr 0
+     | _u -> 0)
 let main = (let () = func ();
                      print two ex;
                      printbar () in ())

@@ -1,0 +1,13 @@
+let foo unused = (
+    let unused = (unused + 1) in (
+        let unused = 3 in unused
+    )
+)
+
+let foo2 a b c = (
+    let func a = (c + a) in func b
+)
+
+let x = match 1 with {
+    | x -> foo2 1 2 3
+}
