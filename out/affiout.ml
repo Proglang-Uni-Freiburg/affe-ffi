@@ -32,9 +32,11 @@ extern Array
   val get 
 *)
 let arr = (Array.init 1 (fun _i -> 2))
-let two = (Array.get arr 0)
 let print i s = ( print_int i ; print_endline s )
 let ex = ( "!" )
+let two = (match true with
+             | true -> Array.get arr 0
+             | false -> 0)
 let main = (let () = func ();
                      print two ex;
                      printbar () in ())

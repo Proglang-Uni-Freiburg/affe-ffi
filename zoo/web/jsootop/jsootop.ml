@@ -14,10 +14,6 @@ let () =
   Sys_js.set_channel_flusher stdout 
     (fun s -> add_to_term 3 s; flush_term 3 ())
 
-let builtins = [
-  "Foo" ; "Intset"
-]
-
 let cache_builtin (m : string) : unit =
   Js.Unsafe.fun_call (Js.Unsafe.js_expr "cacheBuiltin")
     [|Js.Unsafe.inject m|]
@@ -40,6 +36,9 @@ let load_files l =
   let l = Html.ul (List.map elem l) in
   Register.id ~keep:true "builtin" [l]
 
+let builtins = [
+  "Foo" ; "Intset" ; "Nested"
+]
 
 let execute code =
   JsooTop.initialize ();

@@ -6,7 +6,7 @@
 
 # using the `extern`-keyword before a type or val declarations tells Affe to
 # add the typing information to the environment as usual, but not to add any
-# code to the compiled OCaml-output.
+# code to the transpiled OCaml-output.
 
 extern type string
 extern val print_int : int -> unit
@@ -59,7 +59,6 @@ extern Array (
 )
 
 let arr = Array.init 1 (fun i -> 2)
-let two = Array.get &arr 0
 
 ## Inline OCaml code
 
@@ -69,12 +68,26 @@ let two = Array.get &arr 0
 
 # Note that the type of the expression cannot be inferred and must be given
 # explicitly. It is the users responsibility to ensure that the types match.
+# Type mismatches may result in runtime errors.
 # In the case that <name> is a function type, a list of parameter names can be
 # provided that can also be used in the OCaml expression.
 
 extern print i s : int -> string -> unit = <| print_int i ; print_endline s |>
 extern ex : string = <| "!" |>
 
+
+## Affe to OCaml translation
+
+# Affe has a syntax that is very similar to OCaml. The translation from 
+# Affe to OCaml is therefore mostly straight forward.
+# In short, the translation mainly just removes borrows from expressions
+# and kinds from type declarations. Some minor changes are match syntax and 
+# True/False constants
+
+let two = match True with {
+    | True -> Array.get &arr 0
+    | False -> 0
+}
 
 let main = let () = 
     func ();

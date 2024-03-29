@@ -46,6 +46,6 @@ web:
 	@cp _build/default/zoo/web/jsootop/jsootop.bc.js www
 
 github_pages: web
-	@cd ../lukaskleinert.github.io/ ; git pull --rebase
-	@cp -r www/* ../lukaskleinert.github.io/
-	@cd ../lukaskleinert.github.io/ ; git add . ; git commit -m "auto upload" ; git push
+	@cd ../lukaskleinert.github.io/affe-ffi ; git pull --rebase
+	@cp -r www/* ../lukaskleinert.github.io/affe-ffi
+	@cd ../lukaskleinert.github.io/affe-ffi ; git add . ; git commit -m "auto upload" ; git push
