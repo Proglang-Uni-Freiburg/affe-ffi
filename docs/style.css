@@ -3,7 +3,7 @@
   height           : 100%;
   background-color : #073642;
   font-weight      : bold;
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .cm-s-solarized .CodeMirror-gutters {
@@ -13,7 +13,7 @@
 
 .CodeMirror-simplescroll-vertical {
   background-color : #002b36;
-  width            : 14px;
+  width            : 10px;
 }
 
 .CodeMirror-simplescroll-vertical div {
@@ -27,6 +27,7 @@ html, body {
   margin           : 0px;
   width            : calc(100% - 2px);
   height           : 100%;
+  font-size: 12px;
 }
 
 h1 {
