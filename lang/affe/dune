@@ -7,7 +7,7 @@
 (library
   (name affe)
   (libraries ocamlgraph iter zoo)
-  (modules :standard \ Affe Affe_www Eval)
+  (modules :standard \ Affe Affe_docs Eval)
   (preprocess (pps ppx_deriving.std))
   (wrapped false)
 )
@@ -18,8 +18,8 @@
   (libraries affe zoo_native)
 )
 (executable
-  (name affe_www)
-  (modules Affe_www)
+  (name affe_docs)
+  (modules Affe_docs)
   (libraries affe zoo_web)
   (preprocess (pps tyxml-ppx))
   (modes js)

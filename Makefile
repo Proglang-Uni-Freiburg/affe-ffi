@@ -32,20 +32,20 @@ interactive: affe
 
 clean:
 	dune clean
-	rm -f www/affe_www.bc.js
-	rm -f www/jsootop.bc.js
+	rm -f docs/affe_docs.bc.js
+	rm -f docs/jsootop.bc.js
 
 web:
-	dune build lang/affe/affe_www.bc.js --profile=release
+	dune build lang/affe/affe_docs.bc.js --profile=release
 	dune build zoo/web/jsootop/jsootop.bc.js --profile=release
-	@mkdir -p www/builtin
-	@cp  out/builtin/* www/builtin/
-	@mkdir -p www/examples
-	@cp lang/affe/affi/examples/* www/examples/
-	@cp _build/default/lang/affe/affe_www.bc.js www
-	@cp _build/default/zoo/web/jsootop/jsootop.bc.js www
+	@mkdir -p docs/builtin
+	@cp  out/builtin/* docs/builtin/
+	@mkdir -p docs/examples
+	@cp lang/affe/affi/examples/* docs/examples/
+	@cp _build/default/lang/affe/affe_docs.bc.js docs
+	@cp _build/default/zoo/web/jsootop/jsootop.bc.js docs
 
 github_pages: web
 	@cd ../lukaskleinert.github.io/affe-ffi ; git pull --rebase
-	@cp -r www/* ../lukaskleinert.github.io/affe-ffi
+	@cp -r docs/* ../lukaskleinert.github.io/affe-ffi
 	@cd ../lukaskleinert.github.io/affe-ffi ; git add . ; git commit -m "auto upload" ; git push
